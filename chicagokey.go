@@ -41,7 +41,7 @@ func main() {
 	flag.Parse()
 
 	if *v {
-		fmt.Printf("Chicagokey v%s by Daniel Gurney.\n", getVersion())
+		fmt.Printf("Chicagokey v%s by Daniel Gurney. Licensed under GPLv3.\n", getVersion())
 		return
 	}
 
