@@ -1,5 +1,19 @@
 package main
 
+/*
+   Copyright (C) 2020 Daniel Gurney
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 import (
 	"flag"
 	"fmt"
@@ -21,7 +35,7 @@ func getVersion() string {
 }
 
 func main() {
-	b := flag.String("b", "", "Build to generate the site id and password for. Valid options: 73f, 73g, 81, 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 275)")
+	b := flag.String("b", "", "Build to generate the site id and password for. Valid options: 73f, 73g, 81, 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 275).")
 	r := flag.Int("r", 1, "Repeat n times.")
 	v := flag.Bool("v", false, "Print version information and exit.")
 	flag.Parse()
