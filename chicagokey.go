@@ -68,7 +68,11 @@ func main() {
 		fmt.Println("Site cannot be more than 999999, ignoring...")
 	}
 	for i := 0; i < *r; i++ {
-		site, pass := generation.GenerateCredentials(build, *s, *p)
+		site, pass, err := generation.GenerateCredentials(build, *s, *p)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		fmt.Printf("Site ID: %s\nPassword: %s\n", site, pass)
 	}
 }

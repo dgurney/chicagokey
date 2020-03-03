@@ -16,6 +16,7 @@ package generation
 */
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"math/rand"
@@ -46,10 +47,13 @@ func getText(build string) (string, error) {
 		// Up to 275
 		return "Windows 95 Beta 2 Release, October 1994", nil
 	}
-	return "", fmt.Errorf("check your code dummy")
+	return "", fmt.Errorf("incorrect build")
 }
 
-func genPass(site, build string, p uint) string {
+func genPass(site, build string, p uint) (string, error) {
+	if p > 65535 {
+		return "", errors.New("provided password value cannot be higher than 65535")
+	}
 	pass := ""
 	switch {
 	default:
@@ -59,14 +63,14 @@ func genPass(site, build string, p uint) string {
 	}
 	_, err := strconv.Atoi(site)
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 	// Generate the MD4 hash.
 	hash := md4.New()
 	text, err := getText(build)
 	if err != nil {
 		// The hardcoded string is an integral component of the hash. We cannot proceed if it's incorrect.
-		panic(err)
+		return "", err
 	}
 	io.WriteString(hash, site+pass+text)
 	lasth := hash.Sum(nil)
@@ -87,18 +91,26 @@ func genPass(site, build string, p uint) string {
 	}
 
 	// Middle digit must be mod 9'd.
-	return fmt.Sprintf("%s%d%s", pass, middle%9, last)
+	return fmt.Sprintf("%s%d%s", pass, middle%9, last), nil
 }
 
 // GenerateCredentials generates a beta site id and password.
-func GenerateCredentials(build string, site, password uint) (string, string) {
+func GenerateCredentials(build string, site, password uint) (string, string, error) {
+	if site > 999999 {
+		return "", "", errors.New("site cannot be higher than 999999")
+	}
 	s := strconv.Itoa(int(site))
 	switch {
 	default:
 		s = fmt.Sprintf("%06d", r.Intn(999999))
-	case len(s) > 0:
+	case site != 0:
 		s = fmt.Sprintf("%06d", site)
 	}
-	pass := genPass(s, build, password)
-	return s, pass
+	pass, err := genPass(s, build, password)
+	if err != nil {
+		if site < 1000000 {
+			return "", "", err
+		}
+	}
+	return s, pass, nil
 }
