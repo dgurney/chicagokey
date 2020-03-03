@@ -57,7 +57,7 @@ func genPass(site, build string, p uint) (string, error) {
 	pass := ""
 	switch {
 	default:
-		pass = fmt.Sprintf("%04x", r.Intn(99999))
+		pass = fmt.Sprintf("%04x", r.Intn(65535))
 	case p != 0:
 		pass = fmt.Sprintf("%04x", p)
 	}
