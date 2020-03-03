@@ -35,7 +35,7 @@ func getVersion() string {
 }
 
 func main() {
-	b := flag.String("b", "", "Build to generate the site id and password for. Valid options: 73f, 73g, 81, 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 275).")
+	b := flag.String("b", "", "Build to generate the site id and password for. Valid options: 73f, 73g, 81 (up to 90c), 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 275).")
 	r := flag.Int("r", 1, "Repeat n times.")
 	v := flag.Bool("v", false, "Print version information and exit.")
 	flag.Parse()
