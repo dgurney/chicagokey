@@ -22,7 +22,7 @@ import (
 )
 
 // Used if chicagokey is not built using the makefile.
-const version = "0.0.1"
+const version = "0.1.0"
 
 // git describe --tags --dirty
 var gitVersion string
@@ -35,7 +35,9 @@ func getVersion() string {
 }
 
 func main() {
-	b := flag.String("b", "", "Build to generate the site id and password for. Valid options: 73f, 73g, 81 (up to 90c), 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 275).")
+	b := flag.String("b", "", "Build to generate the site id and password for. Valid options: 73f, 73g, 81 (up to 90c), 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 302).")
+	s := flag.Uint("s", 0, "Use a custom site, can be up to 6 digits long.")
+	p := flag.Uint("p", 0, "Use a constant integer for the first 4 characters of the password. Can be any positive number up to 65535.")
 	r := flag.Int("r", 1, "Repeat n times.")
 	v := flag.Bool("v", false, "Print version information and exit.")
 	flag.Parse()
@@ -57,9 +59,16 @@ func main() {
 	if *r <= 0 {
 		*r = 1
 	}
-
+	if *p > 65535 {
+		*p = 0
+		fmt.Println("password cannot be more than 65535, ignoring...")
+	}
+	if *s > 999999 {
+		*s = 0
+		fmt.Println("Site cannot be more than 999999, ignoring...")
+	}
 	for i := 0; i < *r; i++ {
-		site, pass := generation.GenerateCredentials(build)
+		site, pass := generation.GenerateCredentials(build, *s, *p)
 		fmt.Printf("Site ID: %s\nPassword: %s\n", site, pass)
 	}
 }

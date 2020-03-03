@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
+	"strconv"
 	"time"
 
 	"golang.org/x/crypto/md4"
@@ -48,9 +49,18 @@ func getText(build string) (string, error) {
 	return "", fmt.Errorf("check your code dummy")
 }
 
-func genPass(site string, build string) string {
-	pass := fmt.Sprintf("%04x", r.Intn(9999))
-
+func genPass(site, build string, p uint) string {
+	pass := ""
+	switch {
+	default:
+		pass = fmt.Sprintf("%04x", r.Intn(99999))
+	case p != 0:
+		pass = fmt.Sprintf("%04x", p)
+	}
+	_, err := strconv.Atoi(site)
+	if err != nil {
+		panic(err)
+	}
 	// Generate the MD4 hash.
 	hash := md4.New()
 	text, err := getText(build)
@@ -81,8 +91,14 @@ func genPass(site string, build string) string {
 }
 
 // GenerateCredentials generates a beta site id and password.
-func GenerateCredentials(build string) (string, string) {
-	site := fmt.Sprintf("%06d", r.Intn(999999))
-	pass := genPass(site, build)
-	return site, pass
+func GenerateCredentials(build string, site, password uint) (string, string) {
+	s := strconv.Itoa(int(site))
+	switch {
+	default:
+		s = fmt.Sprintf("%06d", r.Intn(999999))
+	case len(s) > 0:
+		s = fmt.Sprintf("%06d", site)
+	}
+	pass := genPass(s, build, password)
+	return s, pass
 }
