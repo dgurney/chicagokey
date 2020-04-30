@@ -1,5 +1,5 @@
-// Package generation handles the generation of beta site IDs and keys.
-package generation
+// Package generator handles the generation of beta site IDs and keys.
+package generator
 
 /*
    Copyright (C) 2020 Daniel Gurney

@@ -18,7 +18,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/dgurney/chicagokey/generation"
+	"github.com/dgurney/chicagokey/pkg/generator"
 )
 
 // Used if chicagokey is not built using the makefile.
@@ -68,7 +68,7 @@ func main() {
 		fmt.Println("Site cannot be more than 999999, ignoring...")
 	}
 	for i := 0; i < *r; i++ {
-		site, pass, err := generation.GenerateCredentials(build, *s, *p)
+		site, pass, err := generator.GenerateCredentials(build, *s, *p)
 		if err != nil {
 			fmt.Println(err)
 			return
