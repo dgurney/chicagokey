@@ -35,7 +35,7 @@ func getVersion() string {
 }
 
 func main() {
-	b := flag.String("b", "", "Build to generate the site id and password for. Valid options: 73f, 73g, 81 (up to 90c), 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 302).")
+	b := flag.String("b", "", "Build to generate the site id and password for. Valid Chicago builds: 73f, 73g, 81 (up to 90c), 99 (for builds up to 116), 122 (for builds up to 189), 216 (for builds up to 302). Valid IE builds: ie4july (4.70.1169), ie4sept (4.71.0225)")
 	s := flag.Uint("s", 0, "Use a custom site, can be up to 6 digits long.")
 	p := flag.Uint("p", 0, "Use a constant integer for the first 4 characters of the password. Can be any positive number up to 65535.")
 	r := flag.Int("r", 1, "Repeat n times.")
@@ -49,7 +49,7 @@ func main() {
 
 	build := ""
 	switch {
-	case *b == "73f" || *b == "73g" || *b == "81" || *b == "99" || *b == "122" || *b == "216":
+	case *b == "73f" || *b == "73g" || *b == "81" || *b == "99" || *b == "122" || *b == "216" || *b == "ie4july" || *b == "ie4sept":
 		build = *b
 	default:
 		fmt.Println("Invalid build or no build specified! Usage:")

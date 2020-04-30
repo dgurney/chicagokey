@@ -46,8 +46,15 @@ func getText(build string) (string, error) {
 	case build == "216":
 		// Up to 275
 		return "Windows 95 Beta 2 Release, October 1994", nil
+		// Internet Explorer 4
+	case build == "ie4july":
+		// 4.70.1169
+		return "Microsoft Internet Explorer 4.0 alpha 2 July 1996 release", nil
+	case build == "ie4sept":
+		// 4.71.0225
+		return "Microsoft Internet Explorer 4.0 Beta - Sept. 1996 release", nil
 	}
-	return "", fmt.Errorf("incorrect build")
+	return "", fmt.Errorf("invalid build")
 }
 
 func genPass(site, build string, p uint) (string, error) {
