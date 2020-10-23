@@ -1,4 +1,4 @@
-module github.com/dgurney/chicagokey/pkg/generator
+module github.com/dgurney/chicagokey
 
 go 1.13
 
