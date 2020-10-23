@@ -22,7 +22,7 @@ import (
 )
 
 // Used if chicagokey is not built using the makefile.
-const version = "0.3.0"
+const version = "0.3.1"
 
 // git describe --tags --dirty
 var gitVersion string
